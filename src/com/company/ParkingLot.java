@@ -10,29 +10,31 @@ public class ParkingLot {
     private HashMap<Integer,String>  carColour=new HashMap<Integer,String>();
     private ArrayList<Integer> arrayList=new ArrayList<>();
     Scanner sc=new Scanner(System.in);
-    int capacity=1,slot,opt=0,choice;
+    int capacity=1,opt=0;
+    String choice;
     public void createParkingLot(){
         do {
             System.out.println("1.Park Car into parking(Enter 1)");
             System.out.println("2.Remove Car from the parking(Enter 2)");
             System.out.println("3.Find slot number with Colour(Enter 3)");
             System.out.println("4.Find slot number with Registration Number(Enter 4)");
-            choice= Integer.parseInt(sc.nextLine());
-            if(choice==1)
+            choice=sc.nextLine();
+            String[] splitChoice=choice.split("\\s");
+            if(splitChoice[0].equals("park"))
             {
-                carEntersParkingLot();
+                carEntersParkingLot(splitChoice[1],splitChoice[2]);
             }
-            else if (choice==2)
+            else if (splitChoice[0].equals("leave"))
             {
-               carLeavesParkinglot();
+               carLeavesParkinglot(splitChoice[1]);
             }
-            else if (choice==3)
+            else if (splitChoice[0].equals("slot_numbers_for_cars_with_colour"))
             {
-                findSlotWithColour();
+                findSlotWithColour(splitChoice[1]);
             }
-            else if (choice==4)
+            else if (splitChoice[0].equals("slot_number_for_registration_number"))
             {
-                findSlotWithNumber();
+                findSlotWithNumber(splitChoice[1]);
             }
             printCarStatus();
             System.out.println("Do you want to continue(0/1)");
@@ -40,9 +42,7 @@ public class ParkingLot {
         }while (opt!=0);
     }
 
-    private void findSlotWithNumber() {
-        System.out.println("Enter number to be searched");
-        String numbertoSearch=sc.nextLine();
+    private void findSlotWithNumber(String numbertoSearch) {
         if(carPlate.containsValue(numbertoSearch)){
             carPlate.forEach((key, value) -> {
                 if (value.equals(numbertoSearch)) {
@@ -56,9 +56,7 @@ public class ParkingLot {
 
     }
 
-    private void findSlotWithColour() {
-        System.out.println("Enter colour to be searched");
-        String colourtoSearch=sc.nextLine();
+    private void findSlotWithColour(String colourtoSearch) {
         if(carColour.containsValue(colourtoSearch)){
             carColour.forEach((key, value) -> {
                 if (value.equals(colourtoSearch)) {
@@ -71,23 +69,15 @@ public class ParkingLot {
         }
     }
 
-    private void carEntersParkingLot(){
+    private void carEntersParkingLot(String number,String colour){
         if (capacity!=7 && arrayList.isEmpty()){
-            System.out.println("Enter number plate");
-            String numberPlate=sc.nextLine();
-            System.out.println("Enter car colour");
-            String colour=sc.nextLine();
-            carPlate.put(capacity,numberPlate);
+            carPlate.put(capacity,number);
             carColour.put(capacity,colour);
             System.out.println("Allocated slot number:"+capacity);
             capacity++;
         }
         else if (!arrayList.isEmpty() && capacity!=7){
-            System.out.println("Enter number plate");
-            String numberPlate=sc.nextLine();
-            System.out.println("Enter car colour");
-            String colour=sc.nextLine();
-            carPlate.put(arrayList.get(0),numberPlate);
+            carPlate.put(arrayList.get(0),number);
             carColour.put(arrayList.get(0),colour);
             System.out.println("Allocated slot number:"+arrayList.get(0));
             arrayList.remove(0);
@@ -98,12 +88,11 @@ public class ParkingLot {
         }
     }
 
-    private void carLeavesParkinglot(){
-        System.out.println("Enter the slot from which the car exits");
-        slot= Integer.parseInt(sc.nextLine());
-        carPlate.remove(slot);
-        carColour.remove(slot);
-        arrayList.add(slot);
+    private void carLeavesParkinglot(String slot){
+        int slotToInt=Integer.parseInt(slot);
+        carColour.remove(slotToInt);
+        carPlate.remove(slotToInt);
+        arrayList.add(slotToInt);
         Collections.sort(arrayList);
         capacity--;
     }
