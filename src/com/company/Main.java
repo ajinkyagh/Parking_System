@@ -8,7 +8,9 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        InputClass inputClass=new InputClass();
         ParkingLot parkingLot=new ParkingLot();
-        parkingLot.createParkingLot();
+        inputClass.performParkingOperation(parkingLot);
+
     }
 }
