@@ -7,13 +7,13 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ParkingLot  {
+    private final int size;
     private HashMap<Integer,Car> parkingLot = new HashMap<>();
     private final ArrayList<Integer> arrayList=new ArrayList<>();
-    Scanner sc=new Scanner(System.in);
-    int capacity=1,opt=0;
+    int capacity=1;
 
-    public void setParkingLot(HashMap<Integer, Car> parkingLot) {
-        this.parkingLot = parkingLot;
+    public ParkingLot(int size) {
+        this.size=size;
     }
 
     public void findPlateWithColour(String s) {
@@ -75,7 +75,7 @@ public class ParkingLot  {
 
     }
 
-    public void carEntersParkingLot(String number,String colour,int size){
+    public void carEntersParkingLot(String number,String colour){
         if (capacity!=size+1 && arrayList.isEmpty()){
             Car vehicle=new Car(number,colour);
             parkingLot.put(capacity,vehicle);
