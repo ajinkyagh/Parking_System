@@ -49,11 +49,10 @@ public class ParkingLot {
 
     }
 
-    public void carEntersParkingLot(String number,String colour){
-        if (capacity!=7 && arrayList.isEmpty()){
+    public void carEntersParkingLot(String number,String colour,int size){
+        if (capacity!=size+1 && arrayList.isEmpty()){
             Car vehicle=new Car(number,colour);
             car.put(capacity,vehicle);
-            System.out.println(vehicle.plate+" "+vehicle.colour);
             System.out.println("Allocated slot number:"+capacity);
             capacity++;
         }
