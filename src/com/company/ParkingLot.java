@@ -3,7 +3,6 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ParkingLot  {
@@ -82,7 +81,7 @@ public class ParkingLot  {
             System.out.println("Allocated slot number:"+capacity);
             capacity++;
         }
-        else if (!arrayList.isEmpty() && capacity!=7){
+        else if (!arrayList.isEmpty() && capacity!=size+1){
             Car vehicle=new Car(number,colour);
             parkingLot.put(arrayList.get(0),vehicle);
             System.out.println("Allocated slot number:"+arrayList.get(0));
