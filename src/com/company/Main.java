@@ -5,11 +5,17 @@ import java.io.FileNotFoundException;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-        InputWithTextFile inputWithTextFile=new InputWithTextFile();
-//        inputWithTextFile.inputFromTextFile();
+        InputWithTextFile inputWithTextFile;
+        InputWithConsole inputWithConsole=new InputWithConsole(args.length);
+        OutputWriter writer;
 
-        InputWithConsole inputWithConsole=new InputWithConsole();
-        inputWithConsole.inputFromConsole();
+        if (args.length!=0){
+            inputWithTextFile=new InputWithTextFile(args[0],args.length,new ParkingLotFileWriter(args[1]));
+            inputWithTextFile.inputFromTextFile();
+        }
+        else {
+            inputWithConsole.inputFromConsole();
+        }
 
 
 

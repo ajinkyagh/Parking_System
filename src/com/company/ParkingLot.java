@@ -6,26 +6,30 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ParkingLot  {
+    OutputWriter writer;
     private final int size;
-    private HashMap<Integer,Car> parkingLot = new HashMap<>();
+    private final HashMap<Integer,Car> parkingLot = new HashMap<>();
     private final ArrayList<Integer> arrayList=new ArrayList<>();
     int capacity=1;
 
-    public ParkingLot(int size) {
+    public ParkingLot(int size, OutputWriter writer) {
         this.size=size;
+        this.writer = writer;
     }
 
     public void findPlateWithColour(String s) {
         AtomicBoolean flag= new AtomicBoolean(true);
         parkingLot.forEach((key, value) -> {
             if (value.getColour().equals(s)) {
-                System.out.print(value.getPlate()+",");
+                String outputString=value.getPlate()+",";
+                writer.write(outputString);
                 flag.set(false);
             }
 
         });
         if(flag.get()){
-            System.out.println("Not found");
+            String outputString="Not found";
+            writer.write(outputString);
             flag.set(true);
 
         }
@@ -35,7 +39,8 @@ public class ParkingLot  {
         AtomicBoolean flag= new AtomicBoolean(true);
             parkingLot.forEach((key, value) -> {
                 if (value.getPlate().equals(numbertoSearch)) {
-                    System.out.print(key+",");
+                    String outputString=key+",";
+                    writer.write(outputString);
                     flag.set(false);
                 }
 
@@ -43,7 +48,8 @@ public class ParkingLot  {
             });
 
         if(flag.get()){
-            System.out.println("Not found");
+            String outputString="Not found";
+            writer.write(outputString);
             flag.set(true);
 
         }
@@ -55,10 +61,10 @@ public class ParkingLot  {
 
     void findSlotWithColour(String colourtoSearch) {
         AtomicBoolean flag= new AtomicBoolean(true);
-
             parkingLot.forEach((key, value) -> {
                 if (value.getColour().equals(colourtoSearch)) {
-                    System.out.print(key+",");
+                    String outputString=key+",";
+                    writer.write(outputString);
                     flag.set(false);
                 }
 
@@ -66,7 +72,8 @@ public class ParkingLot  {
             });
 
         if(flag.get()){
-            System.out.println("Not found");
+            String outputString="Not found";
+            writer.write(outputString);
             flag.set(true);
 
         }
@@ -78,25 +85,32 @@ public class ParkingLot  {
         if (capacity!=size+1 && arrayList.isEmpty()){
             Car vehicle=new Car(number,colour);
             parkingLot.put(capacity,vehicle);
-            System.out.println("Allocated slot number:"+capacity);
+            String outputString = "Allocated slot number:" + capacity;
+
+           writer.write(outputString);
             capacity++;
         }
         else if (!arrayList.isEmpty() && capacity!=size+1){
             Car vehicle=new Car(number,colour);
             parkingLot.put(arrayList.get(0),vehicle);
-            System.out.println("Allocated slot number:"+arrayList.get(0));
+
+            String outputString = "Allocated slot number:" + arrayList.get(0);
+            writer.write(outputString);
+
             arrayList.remove(0);
             capacity++;
         }
         else {
-            System.out.println("Sorry,Parking lot is full");
+            String outputString ="Sorry,Parking lot is full";
+            writer.write(outputString);
         }
     }
 
    public void carLeavesParkinglot(String slot){
         int slotToInt=Integer.parseInt(slot);
         parkingLot.remove(slotToInt);
-        System.out.println("Slot number "+slotToInt+" is free");
+        String outputString="Slot number "+slotToInt+" is free";
+        writer.write(outputString);
         arrayList.add(slotToInt);
         Collections.sort(arrayList);
         capacity--;
@@ -104,9 +118,9 @@ public class ParkingLot  {
 
 
     public void displayCarsAvailable() {
-        System.out.println("Slot No.      Registration No      Colour");
+        writer.write("Slot No.      Registration No      Colour");
         parkingLot.forEach((key, value) -> {
-            System.out.println(key+"            "+value.getPlate()+"           "+value.getColour());
+            writer.write(key+"            "+value.getPlate()+"           "+value.getColour());
         });
 
 
