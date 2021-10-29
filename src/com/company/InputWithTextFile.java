@@ -14,7 +14,7 @@ public class InputWithTextFile {
         this.argsLength=argsLength;
         this.parkingLotFileWriter = parkingLotFileWriter;
     }
-    public static void inputFromTextFile() throws FileNotFoundException {
+    public static boolean inputFromTextFile() throws FileNotFoundException {
         FileReader fr = new FileReader(textFile);
         Scanner inFile = new Scanner(fr);
         Parking parking=new Parking(argsLength,parkingLotFileWriter);
@@ -23,6 +23,7 @@ public class InputWithTextFile {
             parking.performOperations(line);
         }
         inFile.close();
+        return true;
 
     }
 }
