@@ -10,11 +10,13 @@ import java.io.FileNotFoundException;
 public class InputWithTextFileTest {
     @Test
     public void inputFromTextFileTest() throws FileNotFoundException {
-        String textfile= "filename.txt";
-        new InputWithTextFile(textfile,2,new ParkingLotFileWriter("filename2.txt"));
-        InputWithTextFile.inputFromTextFile();
-        File newfile=new File("filename2.txt");
+        String inputFileName= "filename.txt";
+        int length=2;
+        ParkingLotFileWriter fileWriter = new ParkingLotFileWriter("filename2.txt");
+        InputWithTextFile fileReader=new InputWithTextFile(inputFileName,length,fileWriter);
+        fileReader.inputFromTextFile();
+        File outputFileName=new File("filename2.txt");
+        Assertions.assertEquals(0,outputFileName.length());
 
-        Assertions.assertEquals(0,newfile.length());
     }
 }
